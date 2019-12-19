@@ -1,0 +1,37 @@
+server:
+  servlet:
+    session:
+      session-id-resolver: header
+      cookie:
+        max-age: 60s
+        name: JSESSIONID
+        use-base64-encoding: true
+        use-http-only-cookie: true
+      timeout: 2
+      tracking-modes:
+      - cookie
+      - url
+---
+spring:
+  main:
+    banner-mode: off
+    lazy-initialization: false
+    web-application-type: servlet
+  security:
+    user:
+      name: admin
+      password: admin
+      roles:
+      - ADMIN
+  session:
+    hazelcast:
+      map-name: spring:session:sessions
+    timeout: 1m
+---
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+   

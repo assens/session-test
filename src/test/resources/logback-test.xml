@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+  <if condition='isDefined("LOG_FILE")'>
+    <then>
+      <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+      <root level="INFO">
+        <appender-ref ref="FILE" />
+      </root>
+    </then>
+    <else>
+      <include resource="org/springframework/boot/logging/logback/base.xml" />
+      <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+      </root>
+    </else>
+  </if>
+</configuration>
