@@ -26,7 +26,7 @@ public class CompositeHttpSessionIdResolver implements HttpSessionIdResolver {
 
   @Override
   public List<String> resolveSessionIds(HttpServletRequest request) {
-    final Set<String> sessionIds = new HashSet<String>();
+    final Set<String> sessionIds = new HashSet<>();
     sessionIds.addAll(headerHttpSessionIdResolver.resolveSessionIds(request));
     sessionIds.addAll(cookieHttpSessionIdResolver.resolveSessionIds(request));
     return new ArrayList<>(sessionIds);

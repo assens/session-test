@@ -1,13 +1,13 @@
 server:
   servlet:
     session:
-      session-id-resolver: header
+      session-id-resolver: composite
       cookie:
         max-age: 60s
         name: JSESSIONID
         use-base64-encoding: true
         use-http-only-cookie: true
-      timeout: 2
+      timeout: 1
       tracking-modes:
       - cookie
       - url
@@ -34,4 +34,3 @@ management:
     web:
       exposure:
         include: '*'
-   

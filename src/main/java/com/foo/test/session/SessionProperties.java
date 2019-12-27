@@ -20,4 +20,8 @@ public class SessionProperties extends Session {
   @Setter
   @Getter
   private SessionIdResolver sessionIdResolver = COOKIE;
+
+  @Getter
+  @Setter
+  private String header = "X-Session-Id";
 }

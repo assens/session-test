@@ -1,9 +1,6 @@
 package com.foo.test.session;
 
-import static org.springframework.security.core.context.SecurityContextHolder.getContext;
-
 import java.time.Instant;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,17 +19,16 @@ public class HttpSessionEventListener {
   @EventListener(HttpSessionCreatedEvent.class)
   public void onHttpSessionCreatedEvent(final HttpSessionCreatedEvent event) {
     final HttpSession session = event.getSession();
-    log.info("[{}][CREATED][Auth: {}]", session.getId(), getAuthenticationName());
+    log.info("[{}][CREATED]", session.getId());
   }
 
   @EventListener(HttpSessionDestroyedEvent.class)
   public void onHttpSessionDestroyedEvent(final HttpSessionDestroyedEvent event) {
     final HttpSession session = event.getSession();
+    event.getSecurityContexts().forEach(securityContext -> {
+      final Authentication authentication = securityContext.getAuthentication();
+      log.info("[{}][Logged out]", authentication.getName());
+    });
     log.info("[{}][DESTROYED][lastAccessedTime: {}]", session.getId(), Instant.ofEpochMilli(session.getLastAccessedTime()));
   }
-
-  private String getAuthenticationName() {
-    return Optional.ofNullable(getContext().getAuthentication()).map(Authentication::getName).orElse("Anonymous");
-  }
-
 }
